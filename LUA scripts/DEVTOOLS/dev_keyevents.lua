@@ -6,7 +6,6 @@
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-
 local Parent = ...
 local this = {}
 this.__index = Parent
@@ -144,12 +143,12 @@ local function run(e)
   end
 
   -- draw Screen data
-  local lineHeight = this.TX.HORUS and 18 or 9
-  local bgHeight = this.TX.HORUS and 20 or 9
-  local yo  = this.TX.HORUS and 0 or 1
-  local c1 = this.TX.HORUS and 52 or 26
-  local c2 = this.TX.HORUS and 56 or 28
-  local c3 = this.TX.HORUS and 64 or 32
+  local lineHeight = this.TX.COLOR and 18 or 9
+  local bgHeight = this.TX.COLOR and 20 or 9
+  local yo  = this.TX.COLOR and 0 or 1
+  local c1 = this.TX.COLOR and 52 or 26
+  local c2 = this.TX.COLOR and 56 or 28
+  local c3 = this.TX.COLOR and 64 or 32
 
   lcd.clear(this.GUI.C2)
   lcd.drawFilledRectangle(0,0,LCD_W,bgHeight, this.GUI.C1)

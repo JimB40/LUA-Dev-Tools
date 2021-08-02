@@ -6,7 +6,6 @@
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-
 local Parent = ...
 local this = {}
 this.__index = Parent
@@ -14,23 +13,23 @@ setmetatable(this, this)
 
 
 local srcS = 0
-local srcN = this.TX.HORUS and 14 or 7
+local srcN = this.TX.COLOR and 14 or 7
 
-local tBH = this.TX.HORUS and 20 or 9
+local tBH = this.TX.COLOR and 20 or 9
 
-local c1 = this.TX.HORUS and 40 or 20
-local c2 = this.TX.HORUS and 50 or 24
-local c3 = this.TX.HORUS and 150 or 80
-local c4 = this.TX.HORUS and 160 or 84
+local c1 = this.TX.COLOR and 40 or 20
+local c2 = this.TX.COLOR and 50 or 24
+local c3 = this.TX.COLOR and 150 or 80
+local c4 = this.TX.COLOR and 160 or 84
 
 
 local function run(e)
   local source
-  local lineHeight = this.TX.HORUS and 16 or 8
+  local lineHeight = this.TX.COLOR and 16 or 8
   lcd.clear(this.GUI.C2)
   lcd.drawFilledRectangle(0,0,LCD_W,tBH, this.GUI.C1)
-  lcd.drawText( c1 - (this.TX.HORUS and 30 or 20), 1, 'Switches', this.GUI.C2)
-  lcd.drawText( c3 - (this.TX.HORUS and 30 or 20), 1, 'Sources', this.GUI.C2)
+  lcd.drawText( c1 - (this.TX.COLOR and 30 or 20), 1, 'Switches', this.GUI.C2)
+  lcd.drawText( c3 - (this.TX.COLOR and 30 or 20), 1, 'Sources', this.GUI.C2)
 
   for source = srcS, srcS+srcN do
     local line = source - srcS

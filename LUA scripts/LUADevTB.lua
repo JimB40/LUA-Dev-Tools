@@ -6,7 +6,6 @@
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-
 local toolName = "TNS|LUA DevToolBox|TNE"
 
 -- Telemetry loader
@@ -15,9 +14,6 @@ local SCRIPT_LM = 'T'
 local loadNextPage = false
 local loadNextPageID = 0
 local G = {}
-
-G.TX = assert(loadfile(SCRIPT_PATH..'radio.lua')) (G)
-collectgarbage()
 
 G.PAGES = {
   [0] = {t = 'Main Menu',       v = 'mainmenu.lua'                },
@@ -31,6 +27,8 @@ G.PAGES = {
 G.pageDisp = 0
 G.pageLast = 1
 
+G.TX = assert(loadfile(SCRIPT_PATH..'radio.lua')) (G)
+collectgarbage()
 G.GUI = assert(loadfile(SCRIPT_PATH..'gui.lua')) (G)
 collectgarbage()
 

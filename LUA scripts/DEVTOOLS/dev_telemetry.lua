@@ -6,13 +6,12 @@
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-
 local Parent = ...
 local this = {}
 this.__index = Parent
 setmetatable(this, this)
 
-local tBH = this.TX.HORUS and 15 or 8
+local tBH = this.TX.COLOR and 15 or 8
 
 local telem = {
   CRSF = {
@@ -114,15 +113,15 @@ for prot, fields in pairs(telem) do
   end
 end
 
-local c0 = this.TX.HORUS and 20 or 10
-local c1 = this.TX.HORUS and 25 or 11
-local c2 = this.TX.HORUS and 85 or 34
-local c3 = this.TX.HORUS and 150 or 52
-local c4 = this.TX.HORUS and 200 or 80
-local c5 = this.TX.HORUS and 250 or 150
-local c6 = this.TX.HORUS and 300 or 180
-local lines = this.TX.HORUS and 16 or 7
-local lineHeight = this.TX.HORUS and 15 or 8
+local c0 = this.TX.COLOR and 20 or 10
+local c1 = this.TX.COLOR and 25 or 11
+local c2 = this.TX.COLOR and 85 or 34
+local c3 = this.TX.COLOR and 150 or 52
+local c4 = this.TX.COLOR and 200 or 80
+local c5 = this.TX.COLOR and 250 or 150
+local c6 = this.TX.COLOR and 300 or 180
+local lines = this.TX.COLOR and 16 or 7
+local lineHeight = this.TX.COLOR and 15 or 8
 local firstLine = 1
 local sensorMax = 59
 

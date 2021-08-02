@@ -6,7 +6,6 @@
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-
 local Parent = ...
 local this = {}
 this.__index = Parent
@@ -14,10 +13,10 @@ setmetatable(this, this)
 
 local function run(event)
   lcd.clear(this.GUI.C2)
-  local o  = this.TX.HORUS and 0 or 1
-  local lH = this.TX.HORUS and 18 or 9
-  local c1 = this.TX.HORUS and 1 or 1
-  local c2 = this.TX.HORUS and 24 or 12
+  local o  = this.TX.COLOR and 0 or 1
+  local lH = this.TX.COLOR and 18 or 9
+  local c1 = this.TX.COLOR and 1 or 1
+  local c2 = this.TX.COLOR and 24 or 12
 
   lcd.drawFilledRectangle(0,0,c2,LCD_H, this.GUI.C1)
   lcd.drawText(c1,   o+lH*0, '20', this.GUI.C2)

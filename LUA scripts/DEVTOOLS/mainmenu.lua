@@ -6,14 +6,13 @@
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-
 local Parent = ...
 local this = {}
 this.__index = Parent
 setmetatable(this, this)
 
-local maxDispLines = this.TX.HORUS and 14 or 6
-local lineSpace = this.TX.HORUS and 20 or 9
+local maxDispLines = this.TX.COLOR and 14 or 6
+local lineSpace = this.TX.COLOR and 20 or 9
 
 this.selLine = this.pageLast
 local firstDispLine = 1
@@ -22,8 +21,8 @@ local editMode = false
 
 local function drawMenu()
   local w = 0
-  local y = this.TX.HORUS and 30 or 9
-  local xt = this.TX.HORUS and 10 or 1
+  local y = this.TX.COLOR and 30 or 9
+  local xt = this.TX.COLOR and 10 or 1
   local xv = 10
   local lineDisp = 1
 
@@ -43,7 +42,7 @@ local function drawMenu()
     local editFlag = editMode and INVERS or 0
     local yi = y + ((iop - firstDispLine) * lineSpace) -- line y position
     local vx = xt+w
-    drawMenuItem(vx, yi, LCD_W-vx, lineSpace+ (this.TX.HORUS and 4 or 1), item.t, (iop == this.selLine), editMode, la, ra) -- dipslay item
+    drawMenuItem(vx, yi, LCD_W-vx, lineSpace+ (this.TX.COLOR and 4 or 1), item.t, (iop == this.selLine), editMode, la, ra) -- dipslay item
   end
 end
 
@@ -100,12 +99,14 @@ end
 -- RUN function
 this.run = function(e)
 
-  lcd.clear()
+  maxDispLines = this.TX.COLOR and 14 or 6
+  lineSpace = this.TX.COLOR and 20 or 9
+
+  lcd.clear(this.GUI.C2)
   processKeys(e)
 
   this.GUI.drawTopBar()
   this.GUI.drawTitle('JimB40 LUA Dev ToolBox')
-  this.GUI.drawTime()
   drawMenu()
 
   return 0

@@ -6,16 +6,15 @@
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-
 local Parent = ...
 local this = {}
 this.__index = Parent
 setmetatable(this, this)
 
-this.topBarH = this.TX.HORUS and 23 or 8
-this.bottBarH = this.TX.HORUS and 23 or 8
-this.C1 = this.TX.HORUS and TEXT_COLOR or 0
-this.C2 = this.TX.HORUS and TEXT_BGCOLOR or INVERS
+this.topBarH = this.TX.COLOR and 23 or 8
+this.bottBarH = this.TX.COLOR and 23 or 8
+this.C1 = this.TX.COLOR and TEXT_COLOR or 0
+this.C2 = this.TX.COLOR and TEXT_BGCOLOR or INVERS
 
 -- Draw TopBar
 this.drawTopBar = function(h)
@@ -31,18 +30,7 @@ end
 
 -- Draw Time
 this.drawTitle = function(t)
-  lcd.drawText(1,this.TX.HORUS and 1 or 0,t, this.C2)
-end
-
--- Draw Time
-this.drawTime = function()
-  local hour = string.format('%.2d',getDateTime().hour)
-  local min = string.format('%.2d',getDateTime().min)
-  if math.ceil(math.fmod(getTime() / 100, 2)) == 1 then
-    hour = hour .. ":"
-  end
-  lcd.drawText(LCD_W-(this.TX.HORUS and 48 or 22),this.TX.HORUS and 1 or 0,hour, this.C2)
-  lcd.drawText(LCD_W-(this.TX.HORUS and 22 or 10),this.TX.HORUS and 1 or 0,min, this.C2)
+  lcd.drawText(1,this.TX.COLOR and 1 or 0,t, this.C2)
 end
 
 return this

@@ -6,7 +6,6 @@
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-
 local Parent = ...
 local this = {}
 this.__index = Parent
@@ -18,6 +17,6 @@ this.osVersion = osVersion
 this.radioName = radioName
 this.SIM = string.find(radioName, '-')
 this.radioModel = this.SIM and string.sub(this.radioName, 1, this.SIM - 1) or this.radioName
-this.HORUS = LCD_W > 470 and true or false
+this.COLOR = LCD_W > 470 and true or false
 
 return this
