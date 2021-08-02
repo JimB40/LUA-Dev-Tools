@@ -1,18 +1,15 @@
-------------------------------------------------------------------------
--- Key Events
--- date: 2020-04-27
--- author: Robert Janiszewski robert(at)jimb40.com
-------------------------------------------------------------------------
--- compatible radios: OpenTx
--- minimum OpenTx version: 2.3
-------------------------------------------------------------------------
-local toolName = 'TNS|Key Events|TNE'
-
-local otxVersion, txModel, otxMajor, otxMinor, otxRevision = getVersion()
---check if run on Companion strip suffiix
-local simuSuffix = string.find(txModel, '-')
-local radioModel = simuSuffix and string.sub(txModel, 1, simuSuffix - 1) or txModel
-local HORUS = string.match(radioModel, 'x10') or string.match(radioModel, 'x12s') or string.match(radioModel, 't16') or string.match(radioModel, 'tx16s') and true or false
+----------------------------------------------------------
+-- LUA DEV TOOLS
+-- release date: 2021-06-22
+----------------------------------------------------------
+-- Written Robert Janiszewski (JimB40)
+-- fm2m.jimb40.com
+-- robert <at> jimb40 <dot> com
+----------------------------------------------------------
+local Parent = ...
+local this = {}
+this.__index = Parent
+setmetatable(this, this)
 
 
 -- Configurable vars
@@ -101,7 +98,7 @@ local function init()
 
   -- debbuger dump of constants for txt version
   print('')
-  print('Defined KEY EVENTS for radio model: '..radioModel)
+  print('Defined KEY EVENTS for radio model: '..this.TX.radioModel)
 
   print('')
   print('EVT_XXX events')
@@ -146,18 +143,18 @@ local function run(e)
   end
 
   -- draw Screen data
-  local lineHeight = HORUS and 18 or 9
-  local bgHeight = HORUS and 20 or 9
-  local yo  = HORUS and 0 or 1
-  local c1 = HORUS and 52 or 26
-  local c2 = HORUS and 56 or 28
-  local c3 = HORUS and 64 or 32
+  local lineHeight = this.TX.HORUS and 18 or 9
+  local bgHeight = this.TX.HORUS and 20 or 9
+  local yo  = this.TX.HORUS and 0 or 1
+  local c1 = this.TX.HORUS and 52 or 26
+  local c2 = this.TX.HORUS and 56 or 28
+  local c3 = this.TX.HORUS and 64 or 32
 
-  lcd.clear()
-  lcd.drawFilledRectangle(0,0,LCD_W,bgHeight, 0)
-  lcd.drawText( c1, yo, 'eID', RIGHT+(HORUS and TEXT_INVERTED_COLOR or INVERS))
-  lcd.drawLine( c2, 0, c2, LCD_H, DOTTED, SOLID)
-  lcd.drawText( c3, yo, labels[mode], HORUS and TEXT_INVERTED_COLOR or INVERS)
+  lcd.clear(this.GUI.C2)
+  lcd.drawFilledRectangle(0,0,LCD_W,bgHeight, this.GUI.C1)
+  lcd.drawText( c1, yo, 'eID', RIGHT+this.GUI.C2)
+  lcd.drawLine( c2, 0, c2, LCD_H, DOTTED, this.GUI.C1)
+  lcd.drawText( c3, yo, labels[mode], this.GUI.C2)
   for i, e in ipairs(eventSequence) do
     local eName,eVal = 'not defined', e
     for i2, eD in ipairs(cEvents) do
@@ -167,8 +164,8 @@ local function run(e)
         break
       end
     end
-    lcd.drawText( c1, 1+i*lineHeight, eVal, RIGHT)
-    lcd.drawText( c3, 1+i*lineHeight, eName, 0)
+    lcd.drawText( c1, 1+i*lineHeight, eVal, RIGHT+this.GUI.C1)
+    lcd.drawText( c3, 1+i*lineHeight, eName, this.GUI.C1)
   end
 
   return 0

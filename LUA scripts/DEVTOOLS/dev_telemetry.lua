@@ -1,19 +1,17 @@
-------------------------------------------------------------------------
--- Colors
--- date: 2020-10-12
--- author: Robert Janiszewski robert(at)jimb40.com
-------------------------------------------------------------------------
--- compatible radios: OpenTx
--- minimum OpenTx version: 2.3
-------------------------------------------------------------------------
-local toolName = "TNS|Telemetry|TNE"
+----------------------------------------------------------
+-- LUA DEV TOOLS
+-- release date: 2021-06-22
+----------------------------------------------------------
+-- Written Robert Janiszewski (JimB40)
+-- fm2m.jimb40.com
+-- robert <at> jimb40 <dot> com
+----------------------------------------------------------
+local Parent = ...
+local this = {}
+this.__index = Parent
+setmetatable(this, this)
 
-local otxVersion, txModel, otxMajor, otxMinor, otxRevision = getVersion()
---check if run on Companion strip suffiix
-local simuSuffix = string.find(txModel, '-')
-local radioModel = simuSuffix and string.sub(txModel, 1, simuSuffix - 1) or txModel
-local HORUS = LCD_W > 470 and true or false
-
+local tBH = this.TX.HORUS and 15 or 8
 
 local telem = {
   CRSF = {
@@ -115,59 +113,45 @@ for prot, fields in pairs(telem) do
   end
 end
 
-local c0 = HORUS and 20 or 10
-local c1 = HORUS and 25 or 11
-local c2 = HORUS and 85 or 40
-local c3 = HORUS and 150 or 80
-local c4 = HORUS and 200 or 110
-local c5 = HORUS and 250 or 150
-local c6 = HORUS and 300 or 180
-local lines = HORUS and 16 or 7
-local lineHeight = HORUS and 15 or 8
+local c0 = this.TX.HORUS and 20 or 10
+local c1 = this.TX.HORUS and 25 or 11
+local c2 = this.TX.HORUS and 85 or 34
+local c3 = this.TX.HORUS and 150 or 52
+local c4 = this.TX.HORUS and 200 or 80
+local c5 = this.TX.HORUS and 250 or 150
+local c6 = this.TX.HORUS and 300 or 180
+local lines = this.TX.HORUS and 16 or 7
+local lineHeight = this.TX.HORUS and 15 or 8
 local firstLine = 1
 local sensorMax = 59
 
 local function run(e)
-  lcd.clear()
-  -- for i=firstLine,firstLine+lines-1 do
-  --   local y = (i-firstLine)*lineHeight
-  --   lcd.drawText( c0, y+2, i, SMLSIZE+RIGHT)
-  --   lcd.drawText( c1, y+2, telem2[i][1], SMLSIZE)
-  --   lcd.drawText( c2, y+2, telem2[i][2], SMLSIZE)
-  --   lcd.drawText( c3-10, y+2, ':', SMLSIZE)
-  --   local fieldData = getFieldInfo(telem2[i][2])
-  --   if fieldData ~= nil then
-  --     lcd.drawText( c3, y+2,    fieldData.id, SMLSIZE)
-  --     lcd.drawText( c4, y+2, fieldData.name, SMLSIZE)
-  --     lcd.drawText( c5, y+2, getValue(fieldData.id), SMLSIZE)
-  --   else
-  --     lcd.drawText( c3, y+2, 'nil', SMLSIZE)
-  --   end
-  -- end
-  lcd.drawText( c0, 0, 'No', SMLSIZE+RIGHT)
-  lcd.drawText( c1, 0, 'Name', SMLSIZE)
-  lcd.drawText( c2, 0, 'ID', SMLSIZE)
-  lcd.drawText( c3, 0, 'Value', SMLSIZE)
-  lcd.drawText( c4, 0, 'Unit', SMLSIZE)
+  lcd.clear(this.GUI.C2)
+  lcd.drawFilledRectangle(0,0,LCD_W,tBH, this.GUI.C1)
+  lcd.drawText( c0, 0, 'No', this.GUI.C2+SMLSIZE+RIGHT)
+  lcd.drawText( c1, 0, 'Name', this.GUI.C2+SMLSIZE)
+  lcd.drawText( c2, 0, 'ID', this.GUI.C2+SMLSIZE)
+  lcd.drawText( c3, 0, 'Value', this.GUI.C2+SMLSIZE)
+  lcd.drawText( c4, 0, 'Unit', this.GUI.C2+SMLSIZE)
 
   for i=firstLine,firstLine+lines do
     local y = (i-firstLine+1)*lineHeight
-    lcd.drawText( c0, y+2, i-1, SMLSIZE+RIGHT)
+    lcd.drawText( c0, y+2, i-1, this.GUI.C2+SMLSIZE+RIGHT)
     -- lcd.drawText( c1, y+2, telem2[i][1], SMLSIZE)
     -- lcd.drawText( c2, y+2, telem2[i][2], SMLSIZE)
     -- lcd.drawText( c3-10, y+2, ':', SMLSIZE)
     local sensor = model.getSensor(i-1)
     if sensor ~= nil then
-      lcd.drawText( c1, y+2,sensor.name == '' and '---' or sensor.name, SMLSIZE)
+      lcd.drawText( c1, y+2,sensor.name == '' and '---' or sensor.name, this.GUI.C1+SMLSIZE)
       local sensorData = getFieldInfo(sensor.name)
       if sensorData then
-        lcd.drawText( c2, y+2, sensorData.id, SMLSIZE)
+        lcd.drawText( c2, y+2, sensorData.id, this.GUI.C1+SMLSIZE)
         local sensorValue = getValue(sensor.name)
-        lcd.drawText( c3, y+2, sensorValue, SMLSIZE)
-        lcd.drawText( c4, y+2, units[sensor.unit][1], SMLSIZE)
+        lcd.drawText( c3, y+2, sensorValue, this.GUI.C1+SMLSIZE)
+        lcd.drawText( c4, y+2, units[sensor.unit][1], this.GUI.C1+SMLSIZE)
       end
     else
-      lcd.drawText( c3, y+2, 'nil', SMLSIZE)
+      lcd.drawText( c3, y+2, 'nil', this.GUI.C1+SMLSIZE)
     end
   end
 

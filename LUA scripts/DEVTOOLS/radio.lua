@@ -1,39 +1,22 @@
-print('radio.lua loaded')
-
+----------------------------------------------------------
+-- LUA DEV TOOLS
+-- release date: 2021-06-22
+----------------------------------------------------------
+-- Written Robert Janiszewski (JimB40)
+-- fm2m.jimb40.com
+-- robert <at> jimb40 <dot> com
+----------------------------------------------------------
 local Parent = ...
-local ts = {}
-ts.__index = Parent
-setmetatable(ts, ts)
+local this = {}
+this.__index = Parent
+setmetatable(this, this)
 
-local otxVersion, txModel, otxMajor, otxMinor, otxRevision = getVersion()
+local osVersion, radioName, osMajor, osMinor, osRevision = getVersion()
 --check if run on Companion strip suffiix
-local simuSuffix = string.find(txModel, '-')
-ts.model = simuSuffix and string.sub(txModel, 1, simuSuffix - 1) or txModel
-print('radioModel: '..ts.model)
-ts.type = ts.model
-ts.type = (ts.model == 'x10express' or ts.model == 'x12s' or ts.model == 't16' or ts.model == 'tx16s') and 'x10' or ts.type
-ts.type = ts.model == 'x7express' and 'x7' or ts.type
-ts.type = ts.model == 'xlites' and 'xlite' or ts.type
-ts.type = ts.model == 'x9d+2019' and 'x9d' or ts.type
-ts.HORUS = ts.type == 'x10' or ts.type == 'x12s' or ts.type == 't16' or ts.type == 'tx16s'
-print('radioType: '..ts.type)
+this.osVersion = osVersion
+this.radioName = radioName
+this.SIM = string.find(radioName, '-')
+this.radioModel = this.SIM and string.sub(this.radioName, 1, this.SIM - 1) or this.radioName
+this.HORUS = LCD_W > 470 and true or false
 
--- local LCD_BW       = { W = 128, H =  64, color = 1 }
--- local LCD_BW_WIDE  = { W = 212, H =  64, color = 1 }
--- local LCD_COLOR    = { W = 480, H = 272, color = 8 }
---
--- local TxLCD = {
---   xlite   = LCD_BW,
---   xlites  = LCD_BW,
---   x7      = LCD_BW,
---   x9d     = LCD_BW_WIDE,
---   x9d2019 = LCD_BW_WIDE,
---   x9lite  = LCD_BW,
---   x10     = LCD_COLOR,
---   x12     = LCD_COLOR
---   x12     = LCD_COLOR
--- }
---
--- this.LCD = TxLCD[this.txModel]
-
-return ts
+return this

@@ -1,12 +1,12 @@
 ----------------------------------------------------------
 -- LUA DEV TOOLS
--- release date: 2020-07-11
+-- release date: 2021-06-22
 ----------------------------------------------------------
 -- Written Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-local toolName = "TNS|DEV Tools|TNE"
+local toolName = "TNS|LUA DevTools|TNE"
 
 -- Telemetry loader
 local SCRIPT_PATH = '/SCRIPTS/TOOLS/DEVTOOLS/'

@@ -1,39 +1,33 @@
-------------------------------------------------------------------------
--- Radio data
--- date: 2020-04-27
--- author: Robert Janiszewski robert(at)jimb40.com
-------------------------------------------------------------------------
--- compatible radios: OpenTx
--- minimum OpenTx version: 2.3
-------------------------------------------------------------------------
-local toolName = "TNS|Radio Data|TNE"
+----------------------------------------------------------
+-- LUA DEV TOOLS
+-- release date: 2021-06-22
+----------------------------------------------------------
+-- Written Robert Janiszewski (JimB40)
+-- fm2m.jimb40.com
+-- robert <at> jimb40 <dot> com
+----------------------------------------------------------
+local Parent = ...
+local this = {}
+this.__index = Parent
+setmetatable(this, this)
 
-local otxVersion, txModel, otxMajor, otxMinor, otxRevision = getVersion()
---check if run on Companion strip suffiix
-local simuSuffix = string.find(txModel, '-')
-local radioModel = simuSuffix and string.sub(txModel, 1, simuSuffix - 1) or txModel
-local HORUS = string.match(radioModel, 'x10') or string.match(radioModel, 'x12s') or string.match(radioModel, 't16') or string.match(radioModel, 'tx16s') and true or false
-
-
-local o  = HORUS and 0 or 1
-local lH = HORUS and 18 or 9
+local o  = this.TX.HORUS and 0 or 1
+local lH = this.TX.HORUS and 18 or 9
 local c1 = 1
-local c2 = HORUS and 10 or 1
+local c2 = this.TX.HORUS and 150 or 5
 
-print(c2)
-
-print('otxVersion: '..otxVersion)
-print('txModel   : '..txModel)
-print('txName    : '..radioModel)
+print('osVersion:',this.TX.osVersion)
+print('radioName:',this.TX.radioName)
+print('txName: ', this.TX.radioModel)
 
 local function run(event)
-  lcd.clear()
-  lcd.drawText(c1,   o+lH*0,  'OpenTX version')
-  lcd.drawText(c2+2, o+lH*1,   otxVersion)
-  lcd.drawText(c1,   o+lH*2+2,'txModel')
-  lcd.drawText(c2+2, o+lH*3+2, txModel)
-  lcd.drawText(c1,   o+lH*4+4,'radioName')
-  lcd.drawText(c2+2, o+lH*5+4, radioModel)
+  lcd.clear(this.GUI.C2)
+  lcd.drawText(c1, o+lH*0,   'OS Version:', this.GUI.C1)
+  lcd.drawText(c2, this.TX.HORUS and (o+lH*0) or (o+lH*1),   this.TX.osVersion, this.GUI.C1 + (this.TX.HORUS and 0 or BOLD))
+  lcd.drawText(c1, this.TX.HORUS and (o+lH*1+1) or (o+lH*2),   'OS Radio Name:', this.GUI.C1)
+  lcd.drawText(c2, this.TX.HORUS and (o+lH*1+1) or (o+lH*3),   this.TX.radioName, this.GUI.C1 + (this.TX.HORUS and 0 or BOLD))
+  lcd.drawText(c1, this.TX.HORUS and (o+lH*2+2) or (o+lH*4), 'OS Radio Model:', this.GUI.C1)
+  lcd.drawText(c2, this.TX.HORUS and (o+lH*2+2) or (o+lH*5), this.TX.radioModel, this.GUI.C1 + (this.TX.HORUS and 0 or BOLD))
   return 0
 end
 

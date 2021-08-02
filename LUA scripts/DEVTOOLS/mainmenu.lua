@@ -1,5 +1,11 @@
-print('*** mainmenu.lua loaded')
-
+----------------------------------------------------------
+-- LUA DEV TOOLS
+-- release date: 2021-06-22
+----------------------------------------------------------
+-- Written Robert Janiszewski (JimB40)
+-- fm2m.jimb40.com
+-- robert <at> jimb40 <dot> com
+----------------------------------------------------------
 local Parent = ...
 local this = {}
 this.__index = Parent
@@ -21,10 +27,10 @@ local function drawMenu()
   local lineDisp = 1
 
   local function drawMenuItem(x, y, w, h, value, selected, editMode, la, ra)
-    local flags = selected and (this.TX.HORUS and TEXT_INVERTED_COLOR or INVERS) or (this.TX.HORUS and TEXT_COLOR or 0)
+    local flags = selected and this.GUI.C2 or this.GUI.C1
     x = LCD_W - w
     if selected then
-      lcd.drawFilledRectangle(x+1,y,w,h, SOLID)
+      lcd.drawFilledRectangle(x+1,y,w,h, this.GUI.C1)
     end
     lcd.drawText(x+9, y+2, value, flags)
   end
@@ -97,7 +103,7 @@ this.run = function(e)
   processKeys(e)
 
   this.GUI.drawTopBar()
-  this.GUI.drawTitle('DEV Tools')
+  this.GUI.drawTitle('JimB40 LUA DevTools')
   this.GUI.drawTime()
   drawMenu()
 
