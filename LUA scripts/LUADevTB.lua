@@ -1,12 +1,13 @@
 ----------------------------------------------------------
--- LUA DEV TOOLS
--- release date: 2021-06-22
+-- JimB40 Lua Dev ToolBox
+-- release date: 2021-09-01
 ----------------------------------------------------------
--- Written Robert Janiszewski (JimB40)
+-- Coded by Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-local toolName = "TNS|LUA DevTools|TNE"
+
+local toolName = "TNS|LUA DevToolBox|TNE"
 
 -- Telemetry loader
 local SCRIPT_PATH = '/SCRIPTS/TOOLS/DEVTOOLS/'
@@ -24,7 +25,7 @@ G.PAGES = {
   {t = 'Key events',            v = 'dev_keyevents.lua'           },
   {t = 'Font characters',       v = 'dev_font_characters.lua'     },
   {t = 'Sources & Switches ID', v = 'dev_sources_and_switches.lua'},
-  {t = 'Colors (HORUS)',        v = 'dev_colors.lua'},
+  {t = 'Colors Contants',       v = 'dev_colors.lua'},
   {t = 'Telemetry',             v = 'dev_telemetry.lua'},
 }
 G.pageDisp = 0

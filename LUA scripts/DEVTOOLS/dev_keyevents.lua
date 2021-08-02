@@ -1,11 +1,12 @@
 ----------------------------------------------------------
--- LUA DEV TOOLS
--- release date: 2021-06-22
+-- JimB40 Lua Dev ToolBox
+-- release date: 2021-09-01
 ----------------------------------------------------------
--- Written Robert Janiszewski (JimB40)
+-- Coded by Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
+
 local Parent = ...
 local this = {}
 this.__index = Parent
