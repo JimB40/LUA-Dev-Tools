@@ -1,2 +1,2 @@
 # OpenTX-LUA-dev
-Tools for LUA (OpenTX/EdgeTX) development
+Set of LUA Development Tools (OpenTX/EdgeTX)
