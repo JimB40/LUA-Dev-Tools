@@ -1,6 +1,7 @@
 ----------------------------------------------------------
 -- JimB40 Lua Dev ToolBox
--- release date: 2021-09-01
+-- version 0.2
+-- release date: 2021-11-08
 ----------------------------------------------------------
 -- Coded by Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
@@ -12,7 +13,7 @@ this.__index = Parent
 setmetatable(this, this)
 
 local maxDispLines = this.TX.COLOR and 14 or 6
-local lineSpace = this.TX.COLOR and 20 or 9
+local lineSpace = this.TX.COLOR and 22 or 9
 
 this.selLine = this.pageLast
 local firstDispLine = 1
@@ -30,7 +31,7 @@ local function drawMenu()
     local flags = selected and this.GUI.C2 or this.GUI.C1
     x = LCD_W - w
     if selected then
-      lcd.drawFilledRectangle(x+1,y,w,h, this.GUI.C1)
+      lcd.drawFilledRectangle(x+1,y,w-x,h, this.GUI.C1)
     end
     lcd.drawText(x+9, y+2, value, flags)
   end
@@ -42,7 +43,7 @@ local function drawMenu()
     local editFlag = editMode and INVERS or 0
     local yi = y + ((iop - firstDispLine) * lineSpace) -- line y position
     local vx = xt+w
-    drawMenuItem(vx, yi, LCD_W-vx, lineSpace+ (this.TX.COLOR and 4 or 1), item.t, (iop == this.selLine), editMode, la, ra) -- dipslay item
+    drawMenuItem(vx, yi, LCD_W-vx, lineSpace+1, item.t, (iop == this.selLine), editMode, la, ra) -- dipslay item
   end
 end
 
@@ -67,25 +68,19 @@ local function processKeys(e)
     this.pageSelected = this.selLine
     killEvents(EVT_VIRTUAL_ENTER)
   end
-  if (e == EVT_VIRTUAL_NEXT_PAGE) then -- XLITE -> joystick Down, QX7 -> PAGE pressed
-    if this.TX.type == 'xlite' then
-      selectNextMenuItem(1)
-    end
-    killEvents(EVT_VIRTUAL_NEXT_PAGE)
-  end
   if (e == 100) then -- XLITE -> joystick Up
     if this.TX.type == 'xlite' then
       selectNextMenuItem(-1)
     end
     killEvents(100)
   end
-  if (e == EVT_VIRTUAL_NEXT) then -- XLITE -> joystick Right, QX7 -> NavRT
+  if (e == EVT_VIRTUAL_NEXT or e == EVT_VIRTUAL_NEXT_PAGE) then -- XLITE -> joystick Right, QX7 -> NavRT
     selectNextMenuItem(1)
-    killEvents(EVT_VIRTUAL_NEXT)
+    -- killEvents(e)
   end
-  if (e == EVT_VIRTUAL_PREV) then -- XLITE -> joystick Left, QX7 NavLT
+  if (e == EVT_VIRTUAL_PREV or e == EVT_VIRTUAL_PREV_PAGE) then -- XLITE -> joystick Left, QX7 NavLT
     selectNextMenuItem(-1)
-    killEvents(EVT_VIRTUAL_PREV)
+    -- killEvents(e)
   end
 end
 
@@ -98,9 +93,6 @@ end
 
 -- RUN function
 this.run = function(e)
-
-  maxDispLines = this.TX.COLOR and 14 or 6
-  lineSpace = this.TX.COLOR and 20 or 9
 
   lcd.clear(this.GUI.C2)
   processKeys(e)

@@ -1,6 +1,7 @@
 ----------------------------------------------------------
 -- JimB40 Lua Dev ToolBox
--- release date: 2021-09-01
+-- version 0.2
+-- release date: 2021-11-08
 ----------------------------------------------------------
 -- Coded by Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
@@ -10,8 +11,6 @@ local Parent = ...
 local this = {}
 this.__index = Parent
 setmetatable(this, this)
-
-local tBH = this.TX.COLOR and 15 or 8
 
 local telem = {
   CRSF = {
@@ -113,45 +112,44 @@ for prot, fields in pairs(telem) do
   end
 end
 
-local c0 = this.TX.COLOR and 20 or 10
-local c1 = this.TX.COLOR and 25 or 11
-local c2 = this.TX.COLOR and 85 or 34
-local c3 = this.TX.COLOR and 150 or 52
-local c4 = this.TX.COLOR and 200 or 80
-local c5 = this.TX.COLOR and 250 or 150
-local c6 = this.TX.COLOR and 300 or 180
-local lines = this.TX.COLOR and 16 or 7
-local lineHeight = this.TX.COLOR and 15 or 8
+local col0 = this.TX.COLOR and 20 or 10
+local col1 = this.TX.COLOR and 25 or 11
+local col2 = this.TX.COLOR and 85 or 34
+local col3 = this.TX.COLOR and 150 or 52
+local col4 = this.TX.COLOR and 200 or 80
+local col5 = this.TX.COLOR and 250 or 150
+local col6 = this.TX.COLOR and 300 or 180
+local lines = this.TX.COLOR and (this.TX.NV14 and 24 or 14) or 7
 local firstLine = 1
 local sensorMax = 59
 
 local function run(e)
   lcd.clear(this.GUI.C2)
-  lcd.drawFilledRectangle(0,0,LCD_W,tBH, this.GUI.C1)
-  lcd.drawText( c0, 0, 'No', this.GUI.C2+SMLSIZE+RIGHT)
-  lcd.drawText( c1, 0, 'Name', this.GUI.C2+SMLSIZE)
-  lcd.drawText( c2, 0, 'ID', this.GUI.C2+SMLSIZE)
-  lcd.drawText( c3, 0, 'Value', this.GUI.C2+SMLSIZE)
-  lcd.drawText( c4, 0, 'Unit', this.GUI.C2+SMLSIZE)
+  this.GUI.drawTopBar()
+  lcd.drawText( col0, 0, 'No', this.GUI.C2+SMLSIZE+RIGHT)
+  lcd.drawText( col1, 0, 'Name', this.GUI.C2+SMLSIZE)
+  lcd.drawText( col2, 0, 'ID', this.GUI.C2+SMLSIZE)
+  lcd.drawText( col3, 0, 'Value', this.GUI.C2+SMLSIZE)
+  lcd.drawText( col4, 0, 'Unit', this.GUI.C2+SMLSIZE)
 
   for i=firstLine,firstLine+lines do
-    local y = (i-firstLine+1)*lineHeight
-    lcd.drawText( c0, y+2, i-1, this.GUI.C2+SMLSIZE+RIGHT)
-    -- lcd.drawText( c1, y+2, telem2[i][1], SMLSIZE)
-    -- lcd.drawText( c2, y+2, telem2[i][2], SMLSIZE)
-    -- lcd.drawText( c3-10, y+2, ':', SMLSIZE)
+    local y = (i-firstLine+1)*this.GUI.lineHeight
+    lcd.drawText( col0, y+2, i-1, this.GUI.C2+SMLSIZE+RIGHT)
+    -- lcd.drawText( col1, y+2, telem2[i][1], SMLSIZE)
+    -- lcd.drawText( col2, y+2, telem2[i][2], SMLSIZE)
+    -- lcd.drawText( col3-10, y+2, ':', SMLSIZE)
     local sensor = model.getSensor(i-1)
     if sensor ~= nil then
-      lcd.drawText( c1, y+2,sensor.name == '' and '---' or sensor.name, this.GUI.C1+SMLSIZE)
+      lcd.drawText( col1, y+2,sensor.name == '' and '---' or sensor.name, this.GUI.C1+SMLSIZE)
       local sensorData = getFieldInfo(sensor.name)
       if sensorData then
-        lcd.drawText( c2, y+2, sensorData.id, this.GUI.C1+SMLSIZE)
+        lcd.drawText( col2, y+2, sensorData.id, this.GUI.C1+SMLSIZE)
         local sensorValue = getValue(sensor.name)
-        lcd.drawText( c3, y+2, sensorValue, this.GUI.C1+SMLSIZE)
-        lcd.drawText( c4, y+2, units[sensor.unit][1], this.GUI.C1+SMLSIZE)
+        lcd.drawText( col3, y+2, sensorValue, this.GUI.C1+SMLSIZE)
+        lcd.drawText( col4, y+2, units[sensor.unit][1], this.GUI.C1+SMLSIZE)
       end
     else
-      lcd.drawText( c3, y+2, 'nil', this.GUI.C1+SMLSIZE)
+      lcd.drawText( col3, y+2, 'nil', this.GUI.C1+SMLSIZE)
     end
   end
 

@@ -1,34 +1,36 @@
 ----------------------------------------------------------
 -- JimB40 Lua Dev ToolBox
--- release date: 2021-09-01
+-- version 0.2
+-- release date: 2021-11-08
 ----------------------------------------------------------
 -- Coded by Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
 -- robert <at> jimb40 <dot> com
 ----------------------------------------------------------
-local toolName = "TNS|LUA DevToolBox|TNE"
+local toolName = "TNS|LUA DevTools|TNE"
 
 -- Telemetry loader
-local SCRIPT_PATH = '/SCRIPTS/TOOLS/DEVTOOLS/'
+local SCRIPT_PATH = '/SCRIPTS/TOOLS/LUADEVTOOLS/'
 local SCRIPT_LM = 'T'
 local loadNextPage = false
 local loadNextPageID = 0
 local G = {}
 
+G.TX = assert(loadfile(SCRIPT_PATH..'radio.lua')) (G)
+collectgarbage()
+
 G.PAGES = {
-  [0] = {t = 'Main Menu',       v = 'mainmenu.lua'                },
-  {t = 'Radio data',            v = 'dev_radiodata.lua'           },
-  {t = 'Key events',            v = 'dev_keyevents.lua'           },
-  {t = 'Font characters',       v = 'dev_font_characters.lua'     },
-  {t = 'Sources & Switches ID', v = 'dev_sources_and_switches.lua'},
-  {t = 'Colors Contants',       v = 'dev_colors.lua'},
-  {t = 'Telemetry',             v = 'dev_telemetry.lua'},
+  [0] = {t = 'Main Menu',         v = 'mainmenu.lua'                },
+  {t = 'Radio data',              v = 'dev_radiodata.lua'           },
+  {t = 'Font characters',         v = 'dev_font_characters.lua'     },
+  {t = 'Key events',              v = 'dev_keyevents.lua'           },
+  {t = 'Sources & Switches ID',   v = 'dev_sources_and_switches.lua'},
+  {t = 'Telemetry',               v = 'dev_telemetry.lua'},
+  {t = 'Colors (Color LCD only)', v = 'dev_colors.lua'},
 }
 G.pageDisp = 0
 G.pageLast = 1
 
-G.TX = assert(loadfile(SCRIPT_PATH..'radio.lua')) (G)
-collectgarbage()
 G.GUI = assert(loadfile(SCRIPT_PATH..'gui.lua')) (G)
 collectgarbage()
 

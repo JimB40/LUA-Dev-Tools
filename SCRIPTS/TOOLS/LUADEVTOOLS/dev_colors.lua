@@ -1,6 +1,7 @@
 ----------------------------------------------------------
 -- JimB40 Lua Dev ToolBox
--- release date: 2021-09-01
+-- version 0.2
+-- release date: 2021-11-08
 ----------------------------------------------------------
 -- Coded by Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
@@ -14,16 +15,17 @@ setmetatable(this, this)
 
 local colors = {
   { "EDGE TX (NEW)",              nil                       },
-  { "OS_COLOR_PRIMARY1",          OS_COLOR_PRIMARY1         },
-  { "OS_COLOR_PRIMARY2",          OS_COLOR_PRIMARY2         },
-  { "OS_COLOR_PRIMARY3",          OS_COLOR_PRIMARY3         },
-  { "OS_COLOR_SECONDARY1",        OS_COLOR_SECONDARY1       },
-  { "OS_COLOR_SECONDARY2",        OS_COLOR_SECONDARY2       },
-  { "OS_COLOR_SECONDARY3",        OS_COLOR_SECONDARY3       },
-  { "OS_COLOR_FOCUS",             OS_COLOR_FOCUS            },
-  { "OS_COLOR_EDIT",              OS_COLOR_EDIT             },
-  { "OS_COLOR_ACTIVE",            OS_COLOR_ACTIVE           },
-  { "OS_COLOR_WARNING",           OS_COLOR_WARNING          },
+  { "COLOR_THEME_PRIMARY1",       COLOR_THEME_PRIMARY1         },
+  { "COLOR_THEME_PRIMARY2",       COLOR_THEME_PRIMARY2         },
+  { "COLOR_THEME_PRIMARY3",       COLOR_THEME_PRIMARY3         },
+  { "COLOR_THEME_SECONDARY1",     COLOR_THEME_SECONDARY1       },
+  { "COLOR_THEME_SECONDARY2",     COLOR_THEME_SECONDARY2       },
+  { "COLOR_THEME_SECONDARY3",     COLOR_THEME_SECONDARY3       },
+  { "COLOR_THEME_FOCUS",          COLOR_THEME_FOCUS            },
+  { "COLOR_THEME_EDIT",           COLOR_THEME_EDIT             },
+  { "COLOR_THEME_ACTIVE",         COLOR_THEME_ACTIVE           },
+  { "COLOR_THEME_WARNING",        COLOR_THEME_WARNING          },
+  { "COLOR_THEME_DISABLED",       COLOR_THEME_DISABLED         },
 
   { "OPEN TX (OLD)",              nil                       },
   { "ALARM_COLOR",                ALARM_COLOR               },
@@ -52,7 +54,6 @@ local colors = {
   { "MAINVIEW_PANES_COLOR",       MAINVIEW_PANES_COLOR      },
   { "MENU_BGCOLOR",               MENU_BGCOLOR              },
   { "MENU_COLOR",                 MENU_COLOR                },
-  { "MENU_HEADER_HEIGHT",         MENU_HEADER_HEIGHT        },
   { "MENU_HIGHLIGHT_BGCOLOR",     MENU_HIGHLIGHT_BGCOLOR    },
   { "MENU_HIGHLIGHT_COLOR",       MENU_HIGHLIGHT_COLOR      },
   { "MENU_LINE_COLOR",            MENU_LINE_COLOR           },
@@ -73,20 +74,20 @@ local colors = {
 
 local c1 = 0
 local c2 = 240
-local lines = 13
+local lines = this.TX.NV14 and 26 or 15
 local firstLine = 1
 
 local function run(e)
   lcd.clear(this.GUI.C2)
   for i=firstLine,firstLine+lines-1 do
     local v = colors[i]
-    local y = (i-firstLine)*21
+    local y = (i-firstLine)*this.GUI.lineHeight
     if v[2] ~= nil then
-      lcd.drawFilledRectangle(c1+1,y+1,18,18, v[2])
-      lcd.drawRectangle(c1+1,y+1,18,18, this.GUI.C1)
+      lcd.drawFilledRectangle(c1+1,y+1,16,16, v[2])
+      lcd.drawRectangle(c1+1,y+1,16,16, this.GUI.C1)
     end
     lcd.drawText( c1+25, y+2, v[1], this.GUI.C1+SMLSIZE)
-    local colorHex = v[2] and string.format('%06X',lcd.getColor(v[2])) or 'N/D'
+    local colorHex = v[2] and string.format('%04X',lcd.getColor(v[2])) or 'N/D'
     lcd.drawText( c2, y+2, colorHex, this.GUI.C1+SMLSIZE)
   end
 

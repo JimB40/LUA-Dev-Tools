@@ -1,6 +1,7 @@
 ----------------------------------------------------------
 -- JimB40 Lua Dev ToolBox
--- release date: 2021-09-01
+-- version 0.2
+-- release date: 2021-11-08
 ----------------------------------------------------------
 -- Coded by Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
@@ -11,10 +12,15 @@ local this = {}
 this.__index = Parent
 setmetatable(this, this)
 
-
 -- Configurable vars
 local modeSwitch = 'sa'   -- switch to change display mode
 local clearSwitch = 'sb'  -- switch to clear buffer
+
+local yo  = this.TX.COLOR and 0 or 1
+local c1 = this.TX.COLOR and 52 or 26
+local c2 = this.TX.COLOR and 56 or 28
+local c3 = this.TX.COLOR and 64 or 32
+
 
 -- Non-Configurable vars
 local constants = {
@@ -143,15 +149,8 @@ local function run(e)
   end
 
   -- draw Screen data
-  local lineHeight = this.TX.COLOR and 18 or 9
-  local bgHeight = this.TX.COLOR and 20 or 9
-  local yo  = this.TX.COLOR and 0 or 1
-  local c1 = this.TX.COLOR and 52 or 26
-  local c2 = this.TX.COLOR and 56 or 28
-  local c3 = this.TX.COLOR and 64 or 32
-
   lcd.clear(this.GUI.C2)
-  lcd.drawFilledRectangle(0,0,LCD_W,bgHeight, this.GUI.C1)
+  this.GUI.drawTopBar()
   lcd.drawText( c1, yo, 'eID', RIGHT+this.GUI.C2)
   lcd.drawLine( c2, 0, c2, LCD_H, DOTTED, this.GUI.C1)
   lcd.drawText( c3, yo, labels[mode], this.GUI.C2)
@@ -164,8 +163,8 @@ local function run(e)
         break
       end
     end
-    lcd.drawText( c1, 1+i*lineHeight, eVal, RIGHT+this.GUI.C1)
-    lcd.drawText( c3, 1+i*lineHeight, eName, this.GUI.C1)
+    lcd.drawText( c1, 1+i*this.GUI.lineHeight, eVal, RIGHT+this.GUI.C1)
+    lcd.drawText( c3, 1+i*this.GUI.lineHeight, eName, this.GUI.C1)
   end
 
   return 0
