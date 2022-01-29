@@ -78,17 +78,17 @@ local lines = this.TX.NV14 and 26 or 15
 local firstLine = 1
 
 local function run(e)
-  lcd.clear(this.GUI.C2)
+  lcd.clear(this.GUI('C2'))
   for i=firstLine,firstLine+lines-1 do
     local v = colors[i]
     local y = (i-firstLine)*this.GUI.lineHeight
     if v[2] ~= nil then
       lcd.drawFilledRectangle(c1+1,y+1,16,16, v[2])
-      lcd.drawRectangle(c1+1,y+1,16,16, this.GUI.C1)
+      lcd.drawRectangle(c1+1,y+1,16,16, this.GUI('C1'))
     end
-    lcd.drawText( c1+25, y+2, v[1], this.GUI.C1+SMLSIZE)
+    lcd.drawText( c1+25, y+2, v[1], this.GUI('C1')+SMLSIZE)
     local colorHex = v[2] and string.format('%04X',lcd.getColor(v[2])) or 'N/D'
-    lcd.drawText( c2, y+2, colorHex, this.GUI.C1+SMLSIZE)
+    lcd.drawText( c2, y+2, colorHex, this.GUI('C1')+SMLSIZE)
   end
 
   if e == EVT_VIRTUAL_NEXT then

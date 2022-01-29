@@ -24,17 +24,17 @@ local col4 = this.TX.COLOR and 160 or 84
 
 local function run(e)
   local source
-  lcd.clear(this.GUI.C2)
+  lcd.clear(this.GUI('C2'))
   this.GUI.drawTopBar()
-  lcd.drawText( col1 - (this.TX.COLOR and 30 or 20), 1, 'Switches', this.GUI.C2)
-  lcd.drawText( col3 - (this.TX.COLOR and 30 or 20), 1, 'Sources', this.GUI.C2)
+  lcd.drawText( col1 - (this.TX.COLOR and 30 or 20), 1, 'Switches', this.GUI('C2'))
+  lcd.drawText( col3 - (this.TX.COLOR and 30 or 20), 1, 'Sources', this.GUI('C2'))
 
   for source = srcS, srcS+lines do
     local line = source - srcS
-    lcd.drawText(col1, this.GUI.topBarHeight + line * this.GUI.lineHeight, source, this.GUI.C1+RIGHT)
-    lcd.drawSwitch(col2, this.GUI.topBarHeight + line * this.GUI.lineHeight, source, this.GUI.C1)
-    lcd.drawText(col3, this.GUI.topBarHeight + line * this.GUI.lineHeight, source, this.GUI.C1+RIGHT)
-    lcd.drawSource(col4, this.GUI.topBarHeight + line * this.GUI.lineHeight, source, this.GUI.C1)
+    lcd.drawText(col1, this.GUI.topBarHeight + line * this.GUI.lineHeight, source, this.GUI('C1')+RIGHT)
+    lcd.drawSwitch(col2, this.GUI.topBarHeight + line * this.GUI.lineHeight, source, this.GUI('C1'))
+    lcd.drawText(col3, this.GUI.topBarHeight + line * this.GUI.lineHeight, source, this.GUI('C1')+RIGHT)
+    lcd.drawSource(col4, this.GUI.topBarHeight + line * this.GUI.lineHeight, source, this.GUI('C1'))
   end
 
   if e == EVT_VIRTUAL_NEXT or e == EVT_VIRTUAL_NEXT_REPT then

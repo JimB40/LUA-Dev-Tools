@@ -149,11 +149,11 @@ local function run(e)
   end
 
   -- draw Screen data
-  lcd.clear(this.GUI.C2)
+  lcd.clear(this.GUI('C2'))
   this.GUI.drawTopBar()
-  lcd.drawText( c1, yo, 'eID', RIGHT+this.GUI.C2)
-  lcd.drawLine( c2, 0, c2, LCD_H, DOTTED, this.GUI.C1)
-  lcd.drawText( c3, yo, labels[mode], this.GUI.C2)
+  lcd.drawText( c1, yo, 'eID', RIGHT+this.GUI('C2'))
+  lcd.drawLine( c2, 0, c2, LCD_H, DOTTED, this.GUI('C1'))
+  lcd.drawText( c3, yo, labels[mode], this.GUI('C2'))
   for i, e in ipairs(eventSequence) do
     local eName,eVal = 'not defined', e
     for i2, eD in ipairs(cEvents) do
@@ -163,8 +163,8 @@ local function run(e)
         break
       end
     end
-    lcd.drawText( c1, 1+i*this.GUI.lineHeight, eVal, RIGHT+this.GUI.C1)
-    lcd.drawText( c3, 1+i*this.GUI.lineHeight, eName, this.GUI.C1)
+    lcd.drawText( c1, 1+i*this.GUI.lineHeight, eVal, RIGHT+this.GUI('C1'))
+    lcd.drawText( c3, 1+i*this.GUI.lineHeight, eName, this.GUI('C1'))
   end
 
   return 0

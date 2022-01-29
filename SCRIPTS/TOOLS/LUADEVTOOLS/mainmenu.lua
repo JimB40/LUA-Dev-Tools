@@ -28,10 +28,11 @@ local function drawMenu()
   local lineDisp = 1
 
   local function drawMenuItem(x, y, w, h, value, selected, editMode, la, ra)
-    local flags = selected and this.GUI.C2 or this.GUI.C1
+    local flags = selected and this.GUI('C2') or this.GUI('C1')
+    print(tostring(selected),y,flags)
     x = LCD_W - w
     if selected then
-      lcd.drawFilledRectangle(x+1,y,w-x,h, this.GUI.C1)
+      lcd.drawFilledRectangle(x+1,y,w-x,h, this.GUI('C1'))
     end
     lcd.drawText(x+9, y+2, value, flags)
   end
@@ -94,7 +95,7 @@ end
 -- RUN function
 this.run = function(e)
 
-  lcd.clear(this.GUI.C2)
+  lcd.clear(this.GUI('C2'))
   processKeys(e)
 
   this.GUI.drawTopBar()
