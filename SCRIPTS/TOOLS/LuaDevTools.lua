@@ -1,7 +1,7 @@
 ----------------------------------------------------------
 -- JimB40 Lua Dev ToolBox
--- version 0.2
--- release date: 2021-11-08
+-- version 0.4
+-- release date: 2023-07-30
 ----------------------------------------------------------
 -- Coded by Robert Janiszewski (JimB40)
 -- fm2m.jimb40.com
@@ -14,6 +14,7 @@ local SCRIPT_PATH = '/SCRIPTS/TOOLS/LUADEVTOOLS/'
 local SCRIPT_LM = 'T'
 local loadNextPage = false
 local loadNextPageID = 0
+local exit = 0
 local G = {}
 
 G.TX = assert(loadfile(SCRIPT_PATH..'radio.lua')) (G)
@@ -22,8 +23,9 @@ collectgarbage()
 G.PAGES = {
   [0] = {t = 'Main Menu',         v = 'mainmenu.lua'                },
   {t = 'Radio data',              v = 'dev_radiodata.lua'           },
-  {t = 'Font characters',         v = 'dev_font_characters.lua'     },
+  {t = 'Key constants',           v = 'dev_keycontants.lua'         },
   {t = 'Key events',              v = 'dev_keyevents.lua'           },
+  {t = 'Font characters',         v = 'dev_font_characters.lua'     },
   {t = 'Sources & Switches ID',   v = 'dev_sources_and_switches.lua'},
   {t = 'Telemetry',               v = 'dev_telemetry.lua'},
   {t = 'Colors (Color LCD only)', v = 'dev_colors.lua'},
@@ -37,9 +39,13 @@ collectgarbage()
 local function processKeys(event)
 
   if (event == EVT_VIRTUAL_EXIT) then
-    loadNextPageID = 0
-    loadNextPage = true
-    killEvents(EVT_VIRTUAL_EXIT)
+    if loadNextPageID == 0 then
+      exit = 1
+    else
+      loadNextPageID = 0
+      loadNextPage = true
+      killEvents(EVT_VIRTUAL_EXIT)
+    end
   end
   if (event == EVT_VIRTUAL_ENTER) then
     if G.PG and G.pageDisp == 0 then
@@ -76,7 +82,7 @@ function run(event)
     loadPage()
   end
   processKeys(event)
-  return 0
+  return exit
 end
 
 return {init=init, run=run, background=background}

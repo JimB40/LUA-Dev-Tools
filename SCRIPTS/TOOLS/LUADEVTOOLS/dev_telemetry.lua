@@ -124,32 +124,32 @@ local firstLine = 1
 local sensorMax = 59
 
 local function run(e)
-  lcd.clear(this.GUI('C2'))
+  lcd.clear(this.GUI.C2)
   this.GUI.drawTopBar()
-  lcd.drawText( col0, 0, 'No', this.GUI('C2')+SMLSIZE+RIGHT)
-  lcd.drawText( col1, 0, 'Name', this.GUI('C2')+SMLSIZE)
-  lcd.drawText( col2, 0, 'ID', this.GUI('C2')+SMLSIZE)
-  lcd.drawText( col3, 0, 'Value', this.GUI('C2')+SMLSIZE)
-  lcd.drawText( col4, 0, 'Unit', this.GUI('C2')+SMLSIZE)
+  lcd.drawText( col0, 0, 'No', this.GUI.C2+SMLSIZE+RIGHT)
+  lcd.drawText( col1, 0, 'Name', this.GUI.C2+SMLSIZE)
+  lcd.drawText( col2, 0, 'ID', this.GUI.C2+SMLSIZE)
+  lcd.drawText( col3, 0, 'Value', this.GUI.C2+SMLSIZE)
+  lcd.drawText( col4, 0, 'Unit', this.GUI.C2+SMLSIZE)
 
   for i=firstLine,firstLine+lines do
     local y = (i-firstLine+1)*this.GUI.lineHeight
-    lcd.drawText( col0, y+2, i-1, this.GUI('C2')+SMLSIZE+RIGHT)
+    lcd.drawText( col0, y+2, i-1, this.GUI.C2+SMLSIZE+RIGHT)
     -- lcd.drawText( col1, y+2, telem2[i][1], SMLSIZE)
     -- lcd.drawText( col2, y+2, telem2[i][2], SMLSIZE)
     -- lcd.drawText( col3-10, y+2, ':', SMLSIZE)
     local sensor = model.getSensor(i-1)
     if sensor ~= nil then
-      lcd.drawText( col1, y+2,sensor.name == '' and '---' or sensor.name, this.GUI('C1')+SMLSIZE)
+      lcd.drawText( col1, y+2,sensor.name == '' and '---' or sensor.name, this.GUI.C1+SMLSIZE)
       local sensorData = getFieldInfo(sensor.name)
       if sensorData then
-        lcd.drawText( col2, y+2, sensorData.id, this.GUI('C1')+SMLSIZE)
+        lcd.drawText( col2, y+2, sensorData.id, this.GUI.C1+SMLSIZE)
         local sensorValue = getValue(sensor.name)
-        lcd.drawText( col3, y+2, sensorValue, this.GUI('C1')+SMLSIZE)
-        lcd.drawText( col4, y+2, units[sensor.unit][1], this.GUI('C1')+SMLSIZE)
+        lcd.drawText( col3, y+2, sensorValue, this.GUI.C1+SMLSIZE)
+        lcd.drawText( col4, y+2, units[sensor.unit][1], this.GUI.C1+SMLSIZE)
       end
     else
-      lcd.drawText( col3, y+2, 'nil', this.GUI('C1')+SMLSIZE)
+      lcd.drawText( col3, y+2, 'nil', this.GUI.C1+SMLSIZE)
     end
   end
 

@@ -39,7 +39,6 @@ local constants = {
     {'EVT_VIRTUAL_MENU_LONG' , EVT_VIRTUAL_MENU_LONG , 'MENU_LONG' },
     {'EVT_VIRTUAL_ENTER'     , EVT_VIRTUAL_ENTER     , 'ENTER'     },
     {'EVT_VIRTUAL_ENTER_LONG', EVT_VIRTUAL_ENTER_LONG, 'ENTER_LONG'},
-    {'EVT_VIRTUAL_ENTER_REPT', EVT_VIRTUAL_ENTER_REPT, 'ENTER_REPT'},
     {'EVT_VIRTUAL_EXIT'      , EVT_VIRTUAL_EXIT      , 'EXIT'      }
   },
   kEvents = {
@@ -89,6 +88,26 @@ local constants = {
     {'EVT_SHIFT_LONG'      , EVT_SHIFT_LONG      , 'SHIFT_LONG'     },
     {'EVT_SHIFT_REPT'    , EVT_SHIFT_REPT    , 'SHIFT_REPT'   },
     {'EVT_SHIFT_BREAK'     , EVT_SHIFT_BREAK     , 'SHIFT_BREAK'    },
+    {'EVT_MODEL_FIRST'     , EVT_MODEL_FIRST     , 'MODEL_FIRST'    },
+    {'EVT_MODEL_LONG'      , EVT_MODEL_LONG      , 'MODEL_LONG'     },
+    {'EVT_MODEL_REPT'    , EVT_MODEL_REPT    , 'MODEL_REPT'   },
+    {'EVT_MODEL_BREAK'     , EVT_MODEL_BREAK     , 'MODEL_BREAK'    },
+    {'EVT_SYS_FIRST'     , EVT_SYS_FIRST     , 'SYS_FIRST'    },
+    {'EVT_SYS_LONG'      , EVT_SYS_LONG      , 'SYS_LONG'     },
+    {'EVT_SYS_REPT'    , EVT_SYS_REPT    , 'SYS_REPT'   },
+    {'EVT_SYS_BREAK'     , EVT_SYS_BREAK     , 'SYS_BREAK'    },
+    {'EVT_TELEM_FIRST'     , EVT_TELEM_FIRST     , 'TELEM_FIRST'    },
+    {'EVT_TELEM_LONG'      , EVT_TELEM_LONG      , 'TELEM_LONG'     },
+    {'EVT_TELEM_REPT'    , EVT_TELEM_REPT    , 'TELEM_REPT'   },
+    {'EVT_TELEM_BREAK'     , EVT_TELEM_BREAK     , 'TELEM_BREAK'    },
+    {'EVT_PAGEUP_FIRST'     , EVT_PAGEUP_FIRST     , 'PAGEUP_FIRST'    },
+    {'EVT_PAGEUP_LONG'      , EVT_PAGEUP_LONG      , 'PAGEUP_LONG'     },
+    {'EVT_PAGEUP_REPT'    , EVT_PAGEUP_REPT    , 'PAGEUP_REPT'   },
+    {'EVT_PAGEUP_BREAK'     , EVT_PAGEUP_BREAK     , 'PAGEUP_BREAK'    },
+    {'EVT_PAGEDN_FIRST'     , EVT_PAGEDN_FIRST     , 'PAGEDN_FIRST'    },
+    {'EVT_PAGEDN_LONG'      , EVT_PAGEDN_LONG      , 'PAGEDN_LONG'     },
+    {'EVT_PAGEDN_REPT'    , EVT_PAGEDN_REPT    , 'PAGEDN_REPT'   },
+    {'EVT_PAGEDN_BREAK'     , EVT_PAGEDN_BREAK     , 'PAGEDN_BREAK'    },
   }
 }
 local labels = {
@@ -107,7 +126,7 @@ local function init()
   print('Defined KEY EVENTS for radio model: '..this.TX.radioModel)
 
   print('')
-  print('EVT_XXX events')
+  print('EVT_VIRTUAL_XXX events')
   print('---------------')
   for i2, eD in ipairs(constants.vEvents) do
       eName = eD[1]..' '
@@ -116,7 +135,7 @@ local function init()
       print(eName,eVal)
   end
   print('')
-  print('EVT_VIRTUAL_XXX events')
+  print('EVT_XXX events')
   print('----------------------')
   for i2, eD in ipairs(constants.kEvents) do
       eName = eD[1]..' '
@@ -149,11 +168,11 @@ local function run(e)
   end
 
   -- draw Screen data
-  lcd.clear(this.GUI('C2'))
+  lcd.clear(this.GUI.C2)
   this.GUI.drawTopBar()
-  lcd.drawText( c1, yo, 'eID', RIGHT+this.GUI('C2'))
-  lcd.drawLine( c2, 0, c2, LCD_H, DOTTED, this.GUI('C1'))
-  lcd.drawText( c3, yo, labels[mode], this.GUI('C2'))
+  lcd.drawText( c1, yo, 'eID', RIGHT+this.GUI.C2)
+  lcd.drawLine( c2, 0, c2, LCD_H, DOTTED, this.GUI.C1)
+  lcd.drawText( c3, yo, labels[mode], this.GUI.C2)
   for i, e in ipairs(eventSequence) do
     local eName,eVal = 'not defined', e
     for i2, eD in ipairs(cEvents) do
@@ -163,8 +182,8 @@ local function run(e)
         break
       end
     end
-    lcd.drawText( c1, 1+i*this.GUI.lineHeight, eVal, RIGHT+this.GUI('C1'))
-    lcd.drawText( c3, 1+i*this.GUI.lineHeight, eName, this.GUI('C1'))
+    lcd.drawText( c1, 1+i*this.GUI.lineHeight, eVal, RIGHT+this.GUI.C1)
+    lcd.drawText( c3, 1+i*this.GUI.lineHeight, eName, this.GUI.C1)
   end
 
   return 0

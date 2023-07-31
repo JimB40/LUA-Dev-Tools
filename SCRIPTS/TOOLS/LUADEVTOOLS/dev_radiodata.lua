@@ -23,13 +23,13 @@ print('radioName:',this.TX.radioName)
 print('txName: ', this.TX.radioModel)
 
 local function run(event)
-  lcd.clear(this.GUI('C2'))
-  lcd.drawText(c1, o+lH*0,   'OS:', this.GUI('C1'))
-  lcd.drawText(c2, this.TX.COLOR and (o+lH*0) or (o+lH*1),   this.TX.osName..' '..this.TX.osVersion, this.GUI('C1') + (this.TX.COLOR and 0 or BOLD))
-  lcd.drawText(c1, this.TX.COLOR and (o+lH*1+1) or (o+lH*2),   'OS Radio Name:', this.GUI('C1'))
-  lcd.drawText(c2, this.TX.COLOR and (o+lH*1+1) or (o+lH*3),   this.TX.radioName, this.GUI('C1') + (this.TX.COLOR and 0 or BOLD))
-  lcd.drawText(c1, this.TX.COLOR and (o+lH*2+2) or (o+lH*4), 'OS Radio Model:', this.GUI('C1'))
-  lcd.drawText(c2, this.TX.COLOR and (o+lH*2+2) or (o+lH*5), this.TX.radioModel, this.GUI('C1') + (this.TX.COLOR and 0 or BOLD))
+  lcd.clear(this.GUI.C2)
+  lcd.drawText(c1, o+lH*0,   'OS:', this.GUI.C1)
+  lcd.drawText(c2, this.TX.COLOR and (o+lH*0) or (o+lH*1),   this.TX.osName..' '..this.TX.osVersion, this.GUI.C1 + (this.TX.COLOR and 0 or BOLD))
+  lcd.drawText(c1, this.TX.COLOR and (o+lH*1+1) or (o+lH*2),   'OS Radio Name:', this.GUI.C1)
+  lcd.drawText(c2, this.TX.COLOR and (o+lH*1+1) or (o+lH*3),   this.TX.radioName, this.GUI.C1 + (this.TX.COLOR and 0 or BOLD))
+  lcd.drawText(c1, this.TX.COLOR and (o+lH*2+2) or (o+lH*4), 'OS Radio Model:', this.GUI.C1)
+  lcd.drawText(c2, this.TX.COLOR and (o+lH*2+2) or (o+lH*5), this.TX.radioModel, this.GUI.C1 + (this.TX.COLOR and 0 or BOLD))
   return 0
 end
 
